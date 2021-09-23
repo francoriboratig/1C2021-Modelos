@@ -1,0 +1,10 @@
+**Impresiones iniciales y propuestas de resolución**
+22/09 - Mis primeras impresiones. Parece poder resolverse a mano, aún no intenté nada del estilo. No creo que pueda resolverse a mano pues se propone utilizar programación.
+	Una vez hecha una primer propuesta a mano voy a tener una idea de cómo encarar mejor el problema.
+	Por otro lado, tengo tres ideas de algoritmos que voy a utilizar:
+		Uno trivial, que resuelve lo primero que le parece. La idea no es que sea el ganador, es que sea un primer algoritmo que ayude a definir la estructura del programa.
+		Uno que haga "Grid search", tratando de abarcar todas las posibilidades. No se si va a poder resolver este problema, no estoy seguro de las combinaciones posibles. Lo que estoy seguro, es que escala muy mal.
+		Algoritmo "Greedy", estoy pensando en agarrar la prena mas sucia y ponerle todas las prendas compatibles posibles. Algo parecido voy a hacer cuando lo resuelva a mano.
+		Algoritmo "Random search", voy a intentar muchas posibilidades aleatorias tratando de llegar a rincones del "espacio de posibilidades" que los demás algoritmos no puedan.
+Tiene potencial pero es tonto, no piensa, solo prueba cosas. Por otro lado, tengo que buscar una forma de recorrer todo el espacio de soluciones de manera aleatoria.
+Este algoritmo merece su propio txt porque tengo varias ideas dificiles de expresar.

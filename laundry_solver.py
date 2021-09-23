@@ -32,7 +32,7 @@ def evaluate_model(costs,restrictions,method):
 def output_file(result):
     file = open("solution.txt", "w")
     for x in result:
-        file.write("" + x[0] + ", " + x[1] + "\n")
+        file.write("" + x[0] + " " + x[1] + "\n")
         
 #Trivial solving algorithm. Puts every piece on a sepparate laundy session
 def trivial_method(costs,restrictions):

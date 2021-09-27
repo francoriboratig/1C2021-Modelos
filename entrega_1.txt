@@ -8,3 +8,7 @@
 		Algoritmo "Random search", voy a intentar muchas posibilidades aleatorias tratando de llegar a rincones del "espacio de posibilidades" que los demás algoritmos no puedan.
 Tiene potencial pero es tonto, no piensa, solo prueba cosas. Por otro lado, tengo que buscar una forma de recorrer todo el espacio de soluciones de manera aleatoria.
 Este algoritmo merece su propio txt porque tengo varias ideas dificiles de expresar.
+
+
+Update 26/9: Implementé un método que hace lo que yo haría a mano. Casi llego al mejor puntaje del ranking, por lo que creo que mi siguiente paso es que este algoritmo greedy pruebe pequeñas variaciones, arrancar por valores distintos igual de válidos, por ejemplo.
+Esos ultimos retoques voy a ver si son faciles de implementar el lunes antes de la entrega final

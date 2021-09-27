@@ -1,3 +1,5 @@
+import operator
+
 #Processes a file and transforms it in a model that can be processed by the program
 def process_file(file_name):
 
@@ -9,12 +11,12 @@ def process_file(file_name):
     for line in file:
         
         if line.split()[0] == "e":
-            if line.split()[1] in piece_restrictions:
-                piece_restrictions[line.split()[1]] = piece_restrictions[line.split()[1]] + [line.split()[2]]
+            if int(line.split()[1]) in piece_restrictions:
+                piece_restrictions[int(line.split()[1])] = piece_restrictions[int(line.split()[1])] + [int(line.split()[2])]
             else:
-                piece_restrictions[line.split()[1]] = [line.split()[2]]
+                piece_restrictions[int(line.split()[1])] = [int(line.split()[2])]
         if line.split()[0] == "n":
-            piece_costs[line.split()[1]] = line.split()[2]
+            piece_costs[int(line.split()[1])] = int(line.split()[2])
 
     print("/////////////////////")
     print("File processor says: -Hey, I got this!")
@@ -32,7 +34,10 @@ def evaluate_model(costs,restrictions,method):
 def output_file(result):
     file = open("solution.txt", "w")
     for x in result:
-        file.write("" + x[0] + " " + x[1] + "\n")
+        file.write("" + str(x[0]) + " " + str(x[1]) + "\n")
+
+
+#/////////////Solvers////////////////////
         
 #Trivial solving algorithm. Puts every piece on a sepparate laundy session
 def trivial_method(costs,restrictions):
@@ -41,7 +46,53 @@ def trivial_method(costs,restrictions):
         result.append((x,x))
     return result
 
-#Main program
+#The idea of this method is to, grab the biggest cost cloth, and try to put all the other same cost clothes on the same wash.
+#Then, it will try to get all the n-1 cost clothes in the same wash as the n cost clothe, being n the cost of the first cloth picked.
+#Repeat until you can't get any more clothes in the same wash
+def greedy_method(costs,restrictions):
 
+    def shirt_fits_in_bag(shirt,bag,restrictions):
+        result = True
+
+        if len(set(bag).intersection(set(restrictions[shirt]))) != 0:
+               result = False
+
+        return result
+
+    costs_list_sorted = list(costs.items())
+    costs_list_sorted.sort(key = lambda x: -x[1])
+    print("///////////////////")
+    print("Sorted clothes by cost")
+    print(costs_list_sorted)
+    #I have my clothes sorted decreasingly by wash cost
+
+    result = []
+    while len(costs_list_sorted) != 0:
+        #I make a bag of clothes that are permitted together, since the list of clothes is sorted by cost, this is the most expensive bag
+        bag = []
+        for shirt in costs_list_sorted:
+            #I check if I can put this clothing (shirt for short) in the same washing bag, if so, it goes in the bag.
+            if shirt_fits_in_bag(shirt[0],bag,restrictions):
+                bag.append(shirt[0])
+
+        #Now I remove all clothes in clothes list that I already put in the bag
+        costs_list_sorted = [i for i in costs_list_sorted if i[0] not in bag]
+        result.append(bag)
+    print("///////////////////")
+    print("Greedy Algorithm says:")
+    print("-Hey, I think this is the best option")
+    print(result)
+
+    returnable = []
+
+    for i in range(len(result)):
+        for j in result[i]:
+            returnable.append([j,i+1])
+    
+    return returnable
+    
+#///////////////////////////////////////
+
+#Main program
 costs, restrictions = process_file("primer_problema.txt")
-output_file(evaluate_model(costs,restrictions,trivial_method))
+output_file(evaluate_model(costs,restrictions,greedy_method))

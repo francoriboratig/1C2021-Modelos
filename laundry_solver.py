@@ -1,4 +1,5 @@
 import operator
+import random
 
 #Processes a file and transforms it in a model that can be processed by the program
 def process_file(file_name):
@@ -49,7 +50,7 @@ def trivial_method(costs,restrictions):
 #The idea of this method is to, grab the biggest cost cloth, and try to put all the other same cost clothes on the same wash.
 #Then, it will try to get all the n-1 cost clothes in the same wash as the n cost clothe, being n the cost of the first cloth picked.
 #Repeat until you can't get any more clothes in the same wash
-def greedy_method(costs,restrictions):
+def greedy_method(costs,restrictions,randomize=True):
 
     def shirt_fits_in_bag(shirt,bag,restrictions):
         result = True
@@ -60,6 +61,10 @@ def greedy_method(costs,restrictions):
         return result
 
     costs_list_sorted = list(costs.items())
+
+    #Add some variance to the deterministic nature of this algorithm
+    if randomize: random.shuffle(costs_list_sorted)
+    
     costs_list_sorted.sort(key = lambda x: -x[1])
     print("///////////////////")
     print("Sorted clothes by cost")

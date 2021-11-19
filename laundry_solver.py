@@ -19,6 +19,12 @@ def process_file(file_name):
         if line.split()[0] == "n":
             piece_costs[int(line.split()[1])] = int(line.split()[2])
 
+    #If no restrictions were given for a piece, fill the restrictions with empty list
+
+    for i in range(max(piece_costs.keys())):
+        if i+1 not in piece_restrictions:
+            piece_restrictions[i+1] = {}
+
     print("/////////////////////")
     print("File processor says: -Hey, I got this!")
     print("Costs")
@@ -99,5 +105,5 @@ def greedy_method(costs,restrictions,randomize=True):
 #///////////////////////////////////////
 
 #Main program
-costs, restrictions = process_file("primer_problema.txt")
+costs, restrictions = process_file("segundo_problema.txt")
 output_file(evaluate_model(costs,restrictions,greedy_method))

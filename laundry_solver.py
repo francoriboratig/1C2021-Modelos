@@ -53,7 +53,14 @@ def evaluate_model(costs,restrictions,method):
 #Prints the solution to a .txt file with the propper 
 def output_file(result):
     file = open("solution.txt", "w")
-    for x in result:
+
+    returnable = []
+
+    for i in range(len(result)):
+        for j in result[i]:
+            returnable.append([j,i+1])
+
+    for x in returnable:
         file.write("" + str(x[0]) + " " + str(x[1]) + "\n")
 
 #Rate the proposed solution for the problem
@@ -61,8 +68,11 @@ def output_file(result):
 def rate_solution(solution, costs):
     cost = 0
 
-    for e in solution:
-        cost = cost + max(e)
+    for i in solution:
+        bag_costs = []
+        for j in i:
+            bag_costs = bag_costs + [costs[j]]
+        cost = cost + max(bag_costs)
 
     return cost
 
@@ -130,16 +140,18 @@ def greedy_method(costs,restrictions,randomize=True):
     print("-Hey, I think this is the best option")
     print(result)
 
-    returnable = []
+#    returnable = []
 
-    for i in range(len(result)):
-        for j in result[i]:
-            returnable.append([j,i+1])
+#    for i in range(len(result)):
+#        for j in result[i]:
+#            returnable.append([j,i+1])
     
-    return returnable
+    return result
     
 #///////////////////////////////////////
 
 #Main program
 costs, restrictions = process_file("segundo_problema.txt")
-multi_try_evaluation(costs,restrictions,greedy_method,30)
+solution = multi_try_evaluation(costs,restrictions,greedy_method,30)
+print(rate_solution(solution,costs))
+output_file(solution)

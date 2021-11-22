@@ -12,10 +12,22 @@ def process_file(file_name):
     for line in file:
         
         if line.split()[0] == "e":
-            if int(line.split()[1]) in piece_restrictions:
-                piece_restrictions[int(line.split()[1])] = piece_restrictions[int(line.split()[1])] + [int(line.split()[2])]
+
+            left_number = int(line.split()[1])
+            right_number = int(line.split()[2])
+            
+            if left_number in piece_restrictions:
+                if right_number not in piece_restrictions[left_number]: 
+                    piece_restrictions[left_number] = piece_restrictions[left_number] + [right_number]
             else:
-                piece_restrictions[int(line.split()[1])] = [int(line.split()[2])]
+                piece_restrictions[left_number] = [right_number]
+
+            if right_number in piece_restrictions:
+                if left_number not in piece_restrictions[right_number]: 
+                    piece_restrictions[right_number] = piece_restrictions[right_number] + [left_number]
+            else:
+                piece_restrictions[right_number] = [left_number]
+
         if line.split()[0] == "n":
             piece_costs[int(line.split()[1])] = int(line.split()[2])
 

@@ -81,16 +81,23 @@ def rate_solution(solution, costs):
 #Timeout variable units is [seconds]
 def multi_try_evaluation(costs,restrictions,method,timeout):
     best_cost = 99999999
-
+    best_solution = []
+    
     start_time = time.time()
 
     while time.time() < start_time + timeout:
         challenger_solution = evaluate_model(costs,restrictions,method)
         if rate_solution(challenger_solution,costs) < best_cost:
             best_cost = rate_solution(challenger_solution,costs)
-        output_file(challenger_solution)
+            best_solution = challenger_solution
+            output_file(challenger_solution)
+
+    return best_solution
+
     
 #/////////////Solvers////////////////////
+
+
         
 #Trivial solving algorithm. Puts every piece on a sepparate laundy session
 def trivial_method(costs,restrictions):
@@ -152,6 +159,5 @@ def greedy_method(costs,restrictions,randomize=True):
 
 #Main program
 costs, restrictions = process_file("segundo_problema.txt")
-solution = multi_try_evaluation(costs,restrictions,greedy_method,30)
+solution = multi_try_evaluation(costs,restrictions,greedy_method,500)
 print(rate_solution(solution,costs))
-output_file(solution)

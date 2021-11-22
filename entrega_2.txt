@@ -1,0 +1,15 @@
+Se expandio con respecto al trabajo anterior de la siguiente manera:
+
+Se agrego un metodo de "random search" llamado random_smart_method en el codigo.
+
+Por otro lado, se mejoro la solucion haciendo multiples intentos con ambos algoritmos de valor, el greedy y el random.
+
+Se agregaron metodos para evaluar la calidad de una solucion sin tener que enviarla como resultado y para evaluar multiples veces de maneras distintas las distintas soluciones posibles y quedarme con la mejor.
+
+Basicamente se implemento un modelo busqueda de respuestas posibles basado en el "tuning" de algoritmos de inteligencia artificial
+
+Resultados:
+	greedy_method consigue valores aprox 455
+	random_smart_method no es tan smart y consigue valores de 630 aprox. En teoria, con tiempo infinito de busqueda, random_smart_method es mejor.
+
+greedy_method fue corrido durante 30m aprox y random_smart_method tambien.

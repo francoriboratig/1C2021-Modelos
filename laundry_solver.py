@@ -94,7 +94,11 @@ def multi_try_evaluation(costs,restrictions,method,timeout):
 
     return best_solution
 
-    
+def shirt_fits_in_bag(shirt,bag,restrictions):
+    result = True
+    if len(set(bag).intersection(set(restrictions[shirt]))) != 0:
+        result = False
+    return result
 #/////////////Solvers////////////////////
 
 
@@ -110,14 +114,6 @@ def trivial_method(costs,restrictions):
 #Then, it will try to get all the n-1 cost clothes in the same wash as the n cost clothe, being n the cost of the first cloth picked.
 #Repeat until you can't get any more clothes in the same wash
 def greedy_method(costs,restrictions,randomize=True):
-
-    def shirt_fits_in_bag(shirt,bag,restrictions):
-        result = True
-
-        if len(set(bag).intersection(set(restrictions[shirt]))) != 0:
-               result = False
-
-        return result
 
     costs_list_sorted = list(costs.items())
 
@@ -147,17 +143,35 @@ def greedy_method(costs,restrictions,randomize=True):
     print("-Hey, I think this is the best option")
     print(result)
 
-#    returnable = []
-
-#    for i in range(len(result)):
-#        for j in result[i]:
-#            returnable.append([j,i+1])
-    
     return result
+
+#Makes random bags... Is not that arbitrary though: If I have a bag, and there is another piece of clothing that can be put in the bag, it will put it in the bag, since that is ALWAYS better on al multitry enviorment.
+#It works essentialy the same as greedy_method, but instead of sorting, it shuffles
+def random_smart_method(costs,restrictions):
+    costs_list = list(costs.items())
+
+    random.shuffle(costs_list)
     
+    result = []
+    while len(costs_list) != 0:
+        bag = []
+        for shirt in costs_list:
+            #I check if I can put this clothing (shirt for short) in the same washing bag, if so, it goes in the bag.
+            if shirt_fits_in_bag(shirt[0],bag,restrictions):
+                bag.append(shirt[0])
+
+        #Now I remove all clothes in clothes list that I already put in the bag
+        costs_list = [i for i in costs_list if i[0] not in bag]
+        result.append(bag)
+    print("///////////////////")
+    print("Random Smart Algorithm says:")
+    print("-Hey, I think this is the best option")
+    print(result)
+
+    return result
 #///////////////////////////////////////
 
 #Main program
 costs, restrictions = process_file("segundo_problema.txt")
-solution = multi_try_evaluation(costs,restrictions,greedy_method,500)
+solution = multi_try_evaluation(costs,restrictions,random_smart_method,500)
 print(rate_solution(solution,costs))

@@ -1,5 +1,6 @@
 import operator
 import random
+import time
 
 #Processes a file and transforms it in a model that can be processed by the program
 def process_file(file_name):
@@ -55,7 +56,30 @@ def output_file(result):
     for x in result:
         file.write("" + str(x[0]) + " " + str(x[1]) + "\n")
 
+#Rate the proposed solution for the problem
+#It is assumed that the proposed solution is valid
+def rate_solution(solution, costs):
+    cost = 0
 
+    for e in solution:
+        cost = cost + max(e)
+
+    return cost
+
+#All my algorythms are dependant on some randomness that I apply, since they rely on which piece of clothe they begin the bags with.
+#So multiple attempts are necessary for searching the best solution.
+#Timeout variable units is [seconds]
+def multi_try_evaluation(costs,restrictions,method,timeout):
+    best_cost = 99999999
+
+    start_time = time.time()
+
+    while time.time() < start_time + timeout:
+        challenger_solution = evaluate_model(costs,restrictions,method)
+        if rate_solution(challenger_solution,costs) < best_cost:
+            best_cost = rate_solution(challenger_solution,costs)
+        output_file(challenger_solution)
+    
 #/////////////Solvers////////////////////
         
 #Trivial solving algorithm. Puts every piece on a sepparate laundy session
@@ -118,4 +142,4 @@ def greedy_method(costs,restrictions,randomize=True):
 
 #Main program
 costs, restrictions = process_file("segundo_problema.txt")
-output_file(evaluate_model(costs,restrictions,greedy_method))
+multi_try_evaluation(costs,restrictions,greedy_method,30)

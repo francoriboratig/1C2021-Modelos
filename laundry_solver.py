@@ -48,7 +48,7 @@ def process_file(file_name):
 
 #Processes the model generated and returns the solution using the method function provided
 def evaluate_model(costs,restrictions,method):
-    return method(costs,restrictions)
+    return method(costs,restrictions,log=False)
 
 #Prints the solution to a .txt file with the propper 
 def output_file(result):
@@ -91,6 +91,7 @@ def multi_try_evaluation(costs,restrictions,method,timeout):
             best_cost = rate_solution(challenger_solution,costs)
             best_solution = challenger_solution
             output_file(challenger_solution)
+        print("Best: ",best_cost, " | ",start_time + timeout - time.time(), "seconds left")
 
     return best_solution
 
@@ -113,7 +114,7 @@ def trivial_method(costs,restrictions):
 #The idea of this method is to, grab the biggest cost cloth, and try to put all the other same cost clothes on the same wash.
 #Then, it will try to get all the n-1 cost clothes in the same wash as the n cost clothe, being n the cost of the first cloth picked.
 #Repeat until you can't get any more clothes in the same wash
-def greedy_method(costs,restrictions,randomize=True):
+def greedy_method(costs,restrictions,randomize=True,log=True):
 
     costs_list_sorted = list(costs.items())
 
@@ -121,9 +122,9 @@ def greedy_method(costs,restrictions,randomize=True):
     if randomize: random.shuffle(costs_list_sorted)
     
     costs_list_sorted.sort(key = lambda x: -x[1])
-    print("///////////////////")
-    print("Sorted clothes by cost")
-    print(costs_list_sorted)
+#    print("///////////////////")
+#    print("Sorted clothes by cost")
+#    print(costs_list_sorted)
     #I have my clothes sorted decreasingly by wash cost
 
     result = []
@@ -138,16 +139,18 @@ def greedy_method(costs,restrictions,randomize=True):
         #Now I remove all clothes in clothes list that I already put in the bag
         costs_list_sorted = [i for i in costs_list_sorted if i[0] not in bag]
         result.append(bag)
-    print("///////////////////")
-    print("Greedy Algorithm says:")
-    print("-Hey, I think this is the best option")
-    print(result)
+
+    if log:
+        print("///////////////////")
+        print("Greedy Algorithm says:")
+        print("-Hey, I think this is the best option")
+        print(result)
 
     return result
 
 #Makes random bags... Is not that arbitrary though: If I have a bag, and there is another piece of clothing that can be put in the bag, it will put it in the bag, since that is ALWAYS better on al multitry enviorment.
 #It works essentialy the same as greedy_method, but instead of sorting, it shuffles
-def random_smart_method(costs,restrictions):
+def random_smart_method(costs,restrictions,log=True):
     costs_list = list(costs.items())
 
     random.shuffle(costs_list)
@@ -163,15 +166,16 @@ def random_smart_method(costs,restrictions):
         #Now I remove all clothes in clothes list that I already put in the bag
         costs_list = [i for i in costs_list if i[0] not in bag]
         result.append(bag)
-    print("///////////////////")
-    print("Random Smart Algorithm says:")
-    print("-Hey, I think this is the best option")
-    print(result)
+    if log:
+        print("///////////////////")
+        print("Random Smart Algorithm says:")
+        print("-Hey, I think this is the best option")
+        print(result)
 
     return result
 #///////////////////////////////////////
 
 #Main program
-costs, restrictions = process_file("segundo_problema.txt")
-solution = multi_try_evaluation(costs,restrictions,random_smart_method,500)
+costs, restrictions = process_file("tercer_problema.txt")
+solution = multi_try_evaluation(costs,restrictions,greedy_method,18000)
 print(rate_solution(solution,costs))

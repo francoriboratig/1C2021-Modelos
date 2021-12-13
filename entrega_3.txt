@@ -20,4 +20,9 @@ Este algoritmo ya se nos provee, nuestro labor es interactuar con el mismo para 
 
 Conclusiones:
 
+	Se pudo llegar al optimo con ayuda de la solucion provista. Me extrañó mucho el poco progreso en términos de tiempo a la hora de agregar mi solución. Sólo se percibió una diferencia notable luego del "paso 4" eliminando simetrías.
+	Podría atribuirse eso a una pobre primera solución. Lo que lleva a mi siguiente conclusión:
+
+	- Mis soluciones particulares no consideran al problema como uno de coloreo, y no se aplica una heurística conocida al mismo. Sin embargo, mis propuestas me parecieron muy buenas originalmente, pero pierden mucho en frente al óptimo... A penas lo ayudan incluso.
 	
+	Destaco la solución de Visual Studio que se proveyó, sin la misma no hubiera podido hacer todo el código en tiempo y forma.

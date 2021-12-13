@@ -1,0 +1,23 @@
+Esta tercer entrega, trata sobre encontrar una solucion optima al ya trabajado problema de los lavados.
+
+Para esto, se lo trata como un problema de coloreo de grafos. Existe una heuristica que deriva en un algoritmo determinante, que halla la solucion optima del problema.
+Este algoritmo ya se nos provee, nuestro labor es interactuar con el mismo para mejorar su tiempo de finalizado.
+
+1) Algoritmo base
+	Sin mejorar ningun aspecto del algoritmo que se nos provee. La corrida dura 1800 segundos, media hora. Y se aclara que no se llega al optimo. Llega a un valor funcional de 94
+
+2) Poniendo mi solucion como solucion inicial
+	En python y con mis algoritmos, llegue a un valor de 107. Tambien termina por timeout, es decir luego de media hora. Tampoco llega a un optimo.
+	Aqui se presenta algo que me descoloca un poco, dice: "Parece que no se llego al optimo, status 107". Sin embargo luego dice Objetive value 95 y se presenta una solucion. A simple vista esa solucion parece bastante mala, no la evalue.
+
+3) Modificando maxColor
+	Modificamos maxColor a 7 coincidiendo con la solucion que encontre yo.
+	Sigue terminando por timeout, pero ahora con valor de 91 y el programa comunica que no esta seguro de si 91 es el optimo o no.
+
+4) Eliminando simetrias
+	Se agrega el codigo provisto para eliminar simetrias.
+	Ahora si, se alcanza el optimo, 91, y el programa lo reconoce como el mejor valor posible. Se tarda 73 segundos en alcanzar el fin del programa.
+
+Conclusiones:
+
+	

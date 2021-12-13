@@ -396,25 +396,13 @@ void buscarSolucionInicial(int* coloreoValido) {
 		coloreoValido[i] = i;
 	}*/
 
-	//Read File
-	FILE* file = fopen("washes.txt", "r"); // read only
-	if (file == NULL)
-	{
-		printf("Error! Could not open file\n");
-		exit(-1);
-	}
-
+	FILE* file = fopen("washes.txt", "r");
+	
 	int wash;
-	int garment;
-	while (1) {
-		if (fscanf(file, "%d", &garment) == 1) {
+	int clothe;
+	while (fscanf(file, "%d", &clothe) == 1) {
 			fscanf(file, "%d", &wash);
-			printf("We just read %d wash %d \n", garment, wash);
-			coloreoValido[garment-1] = wash;
-		}
-		else {
-			break;
-		}
+			coloreoValido[clothe-1] = wash;
 	}
 
 	int i;
